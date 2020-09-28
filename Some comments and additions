@@ -1,0 +1,85 @@
+# load required packages, may remove some but this is a good starter
+if(!require(magrittr)) install.packages("magrittr", repos = "http://cran.us.r-project.org")
+if(!require(rvest)) install.packages("rvest", repos = "http://cran.us.r-project.org")
+if(!require(readxl)) install.packages("readxl", repos = "http://cran.us.r-project.org")
+if(!require(dplyr)) install.packages("dplyr", repos = "http://cran.us.r-project.org")
+if(!require(maps)) install.packages("maps", repos = "http://cran.us.r-project.org")
+if(!require(ggplot2)) install.packages("ggplot2", repos = "http://cran.us.r-project.org")
+if(!require(reshape2)) install.packages("reshape2", repos = "http://cran.us.r-project.org")
+if(!require(ggiraph)) install.packages("ggiraph", repos = "http://cran.us.r-project.org")
+if(!require(RColorBrewer)) install.packages("RColorBrewer", repos = "http://cran.us.r-project.org")
+if(!require(leaflet)) install.packages("leaflet", repos = "http://cran.us.r-project.org")
+if(!require(plotly)) install.packages("plotly", repos = "http://cran.us.r-project.org")
+if(!require(geojsonio)) install.packages("geojsonio", repos = "http://cran.us.r-project.org")
+if(!require(shiny)) install.packages("shiny", repos = "http://cran.us.r-project.org")
+if(!require(shinyWidgets)) install.packages("shinyWidgets", repos = "http://cran.us.r-project.org")
+if(!require(shinydashboard)) install.packages("shinydashboard", repos = "http://cran.us.r-project.org")
+if(!require(shinythemes)) install.packages("shinythemes", repos = "http://cran.us.r-project.org")
+#load the packages, will update after deciding graphs and such
+library(shiny)
+# Title and base structure
+ui <- navbarPage(
+  title = "DBT ADHERE",
+  fluid = TRUE, 
+  collapsible = TRUE,
+  #edits home tab
+  tabPanel("Home", 
+           includeHTML("home.html"),
+           tags$div(
+             tags$br(),tags$h4("Background"),
+             "Dialectical Behavioral Therapy (DBT) is a manualized treatment originally created for treatment of those with Bipolar Personality Disorder (BPD). 
+             Traditionally, DBT has a detailed structure which a clinician attempts to follow that covers multiple aspects of therapy from validation to reciprocal communication strategies as proposed by Marsha Linehan. 
+             Through following the ideas and principals behind the checklists, a therapist can provide true DBT to their patient’s.",
+             tags$br(),tags$br(),
+             "The intent of this application is to allow therapists to track their adherence over time and across certain clients. 
+             This application also allows for the therapist to view how his peers have rated him in comparison to his own views of his current level of ability.",
+             tags$br(),tags$br(),
+             "This application is based off the principles of the Cognitive-Behavioral Treatment of Borderline Personality Disorder written by Marsha Linehan."
+           )),
+  tags$head(
+    tags$link(rel = "stylesheet", 
+              type = "text/css", 
+              href = "plugins/font-awesome-4.7.0/css/font-awesome.min.css"),
+    tags$link(rel = "icon", 
+              type = "image/jpg", 
+              href = "test.jpg")
+  ),
+  #Individual panels, edit for specifics i.e. video link or questions
+  tabPanel("What is Adherence?",
+           includeHTML("home.html"),
+           tags$div(
+             tags$br(),tags$h4("Types of Adherence"),
+             "Explanation of different categories of adherence",
+             tags$br(),tags$br(),
+             "Common troubles or difficulties in adherence",
+             tags$br(),tags$br(),
+             "Links to articles or videos that explain adherence or sample adherence"
+           )),
+  tags$head(
+    tags$link(rel = "stylesheet", 
+              type = "text/css", 
+              href = "plugins/font-awesome-4.7.0/css/font-awesome.min.css"),
+    tags$link(rel = "icon", 
+              type = "image/jpg", 
+              href = "test.jpg")
+  ),
+  tabPanel(tags$a(href="https://login.panopto.com/?_ga=2.231228637.390442522.1549577689-2042957927.1549577689","Video")),
+  tabPanel("Adherence Questions"), 
+  tabPanel("Analysis")
+
+)
+
+server <- function(input, output) {
+
+}
+
+
+shinyApp(ui = ui, server = server)
+#Im thinking of changing the background color
+#I cannot get your code to run a picture, do you mind sending me a screenshot of what it looks like on your end
+#USiing tags to href the tabs works but changes the height of the href tabs, let me know if you have a thought on that
+#Thoughts on changing the fonts for the different pages?
+#I will work on the code for persitent storage and get to you soon
+# The home html doesnt load, it keeps erroring out to the alt :D instead
+#Shoot me a text today after you read this
+#Also if i postmates you food, what would you want?
