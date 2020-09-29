@@ -1,26 +1,28 @@
 library(shiny)
 
-# Define UI for app that draws a histogram ----
+# Title and base structure
 ui <- navbarPage(
-          title = "Spencer's Twisted MIND",
-          fluid = TRUE, 
-          collapsible = TRUE,
-                           
-          tabPanel("Home", 
-                   includeHTML("home.html")),
-                    tags$head(
-                      tags$link(rel = "stylesheet", 
-                                type = "text/css", 
-                                href = "plugins/font-awesome-4.7.0/css/font-awesome.min.css"),
-                      tags$link(rel = "icon", 
-                                type = "image/jpg", 
-                                href = "test.jpg")
-                    ),
-          
-          tabPanel("Video 1"), 
-          tabPanel("Video 2"), 
-          tabPanel("Graphs")
-                           
+  title = "DBT ADHERE",
+  fluid = TRUE, 
+  collapsible = TRUE,
+  
+  #Home tab
+  tabPanel("Home", 
+        includeHTML("html/home.html")
+  ),
+  
+  #Individual panels, edit for specifics i.e. video link or questions
+  tabPanel("What is Adherence?",
+        includeHTML("html/what_is_adherence_tab.html")
+  ),
+  
+  
+  tabPanel(
+      tags$a(href="https://login.panopto.com/?_ga=2.231228637.390442522.1549577689-2042957927.1549577689","Video")
+    ),
+  
+  tabPanel("Adherence Questions"), 
+  tabPanel("Analysis")
 )
 
 server <- function(input, output) {
