@@ -19,18 +19,21 @@ ui <- tagList(
              includeHTML("html/what_is_adherence_tab.html")
     ),
     
-
+    
     
     tabPanel("Adherence Questions",
-             titlePanel("Questionaire"),
+             titlePanel("Adherence Questions"),
              div(
                id = "form",
-               sliderInput("question_1", "Question 1", 0, 10, 5, ticks = FALSE),
-               sliderInput("question_2", "Question 2", 0, 10, 5, ticks = FALSE),
-               sliderInput("question_3", "Question 3", 0, 10, 5, ticks = FALSE),
+               textInput("ID", "Therapist ID", ""),
+               textInput("pt", "Patient ID"),
+               textInput("session", "Session Number"),
+               sliderInput("question_1", "Question 1", 0, 5, 0, ticks = FALSE),
+               sliderInput("question_2", "Question 2", 0, 5, 0, ticks = FALSE),
+               sliderInput("question_3", "Question 3", 0, 5, 0, ticks = FALSE),
                
                actionButton("submit", "Submit", class = "btn-primary")
-               )
+             )
     ), 
     
     tabPanel("Analysis")
@@ -43,6 +46,9 @@ server <- function(input, output) {
   
   formData <- reactive({
     data.frame(
+      ID = c(input$ID),
+      patient = c(input$pt),
+      session = c(input$session),
       q_1 = c(input$question_1),
       q_2 = c(input$question_2),
       q_3 = c(input$question_3)
