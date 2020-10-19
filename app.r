@@ -6,8 +6,11 @@ library("DT")
 library(ggplot2)
 library(dplyr)
 
+# UI is what is seen or created in the interface
 ui <- tagList(
+#navAppend is a created java script which creates the order of the tabs 
   tags$head(includeScript("navAppend.js")),
+#sets the type of navigation type desires, in our case tabsets were chosen and made fluid (edit)
   navbarPage(
     title = "DBT ADHERE",
     fluid = TRUE, 
@@ -68,14 +71,16 @@ ui <- tagList(
               plotOutput("Q8"),
               plotOutput("Q9"),
               plotOutput("Q10"),
-              plotOutput("Q11"),
+              plotOutput("Q11")
               )),
 )
 
 server <- function(input, output, session) {
-  
-  
- 
+  gs4_deauth()
+  gs4_auth(
+    cache = ".secrets",
+    email = "docstephen44@gmail.com"
+  )
   
   formData <- reactive({
     data.frame(
@@ -104,25 +109,25 @@ server <- function(input, output, session) {
   observeEvent(input$submit, {
     saveData(formData)
   })
-fulldata1<-read_sheet("https://docs.google.com/spreadsheets/d/1VHeKLdFT6q4p0Gt-GhLQxVPZkpa05GmEM5YlmTbY72A/edit#gid=0")
-
-
-
-observe({
+  fulldata1<-read_sheet("https://docs.google.com/spreadsheets/d/1VHeKLdFT6q4p0Gt-GhLQxVPZkpa05GmEM5YlmTbY72A/edit#gid=0")
   
-  therpatients<-sort(unique(fulldata1$Patient[fulldata1$Therapist==input$Therapist]))
-  updateSelectInput(session=session, inputId = "Patient", choices=c("",therpatients))
-})
+  fulldata1$Session<-unlist(fulldata1$Session)
+  fulldata1$Therapist<-unlist(fulldata1$Therapist)
+  fulldata1$Patient<-unlist(fulldata1$Patient)
 
-selectedT<-reactive({fulldata1 %>% dplyr::filter(Therapist == input$Therapist)
-})
-pt<-reactive({ ppt<-selectedT() %>% dplyr::filter(Patient == as.numeric(input$Patient))
- 
-})
+ observe({
+    
+    therpatients<-sort(unique(fulldata1$Patient[fulldata1$Therapist==input$Therapist]))
+    updateSelectInput(session=session, inputId = "Patient", choices=c("",therpatients))
+  })
+  
+  selectedT<-reactive({fulldata1 %>% dplyr::filter(Therapist == input$Therapist)
+  })
+  pt<-reactive({ ppt<-selectedT() %>% dplyr::filter(Patient == as.numeric(input$Patient))
+  
+  })
    
   output$Q1 <- renderPlot({
-    if(input$Patient=="")
-      return(NULL)
     
     trial1<- ggplot(pt(), aes(x=pt()$Session, y=pt()$Q1))+
       geom_jitter(alpha=.3, width=.05, height=.05, color= "blue")+
